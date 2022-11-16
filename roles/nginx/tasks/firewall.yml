@@ -1,0 +1,20 @@
+---
+- name: Install ufw
+  apt:
+    package: ufw
+    state: present
+
+- name: Configure ufw rules
+  ufw:
+    rule: '{{ item.rule }}'
+    port: '{{ item.port }}'
+    proto: '{{ item.proto }}'
+  with_items:
+    - { rule: 'limit', port: '{{ ssh_port | default("22") }}', proto: 'tcp' }
+    - { rule: 'allow', port: '80', proto: 'tcp' }
+    - { rule: 'allow', port: '443', proto: 'tcp' }
+    # - { rule: 'allow', port: '3000', proto: 'tcp' }  not required because of nginx front end
+
+- name: Start and enable firewalld
+  ufw:
+    state: enabled

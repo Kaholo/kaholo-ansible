@@ -1,0 +1,90 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            1b:f5:a5:d3:69:9b:91:4c:9e:d5:76:0f:8e:f1:d0:67
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Kaholodemo Root CA 1
+        Validity
+            Not Before: Sep 20 13:42:25 2022 GMT
+            Not After : Dec 23 13:42:25 2024 GMT
+        Subject: C=FI, ST=Kymenlaakso, L=Hamina, O=Training and Demonstration, OU=Kaholodemo, CN=genesis-a.kaholodemo.net
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:ac:de:ea:92:50:1e:bf:60:85:d1:bf:b6:3f:cc:
+                    12:4a:df:a2:c4:53:f5:ed:5b:c4:74:2c:6b:be:62:
+                    31:74:26:8c:d2:6b:5d:b0:79:96:a2:a7:74:f1:9d:
+                    9d:20:c3:83:d0:dd:9b:b4:19:9c:ba:92:08:5a:92:
+                    dd:25:36:25:d1:74:a7:1f:60:0d:34:d9:80:00:58:
+                    b8:57:45:85:51:58:20:01:32:83:cc:af:22:50:c9:
+                    6a:e4:f7:ae:e1:2c:29:9e:45:79:c9:bf:0d:bf:a0:
+                    e0:68:4f:f4:7b:1d:98:4f:b6:cb:98:c1:8e:67:41:
+                    7e:c7:46:67:1e:f6:56:8e:49:a1:78:a2:48:7b:f6:
+                    a2:68:3d:cf:de:b9:ab:30:c9:5f:ee:fa:ce:81:15:
+                    9e:ef:b9:87:2d:1d:51:cf:38:05:cf:3d:8e:2a:91:
+                    3d:d5:ff:94:a1:ef:1c:4d:d3:1f:16:da:44:9c:10:
+                    16:b8:da:1f:f8:cb:7c:81:04:93:46:9b:84:c4:cd:
+                    2d:28:5e:6b:df:d1:1e:51:2f:a5:e0:a7:de:1b:bd:
+                    06:36:60:d2:7e:77:c8:1b:22:3d:f1:8c:4b:d6:2f:
+                    c0:2a:e4:c2:5a:7b:64:0a:ba:78:6e:84:83:26:e3:
+                    da:de:65:93:ea:f3:70:f5:f4:c9:4d:59:fa:31:25:
+                    68:6b
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                88:DB:FF:64:36:0E:8F:A8:3B:9F:A9:21:BF:1C:34:4B:65:78:EF:B6
+            X509v3 Authority Key Identifier: 
+                keyid:5E:D3:77:F0:13:B7:D1:5D:F1:C1:80:73:6E:67:97:CE:3B:0F:2C:87
+                DirName:/CN=Kaholodemo Root CA 1
+                serial:50:2B:20:DD:7F:25:E7:83:40:AA:86:AF:12:AF:6D:49:4B:78:E2:27
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:genesis-a.kaholodemo.net
+    Signature Algorithm: sha256WithRSAEncryption
+    Signature Value:
+        90:da:e8:d7:02:06:27:42:27:e1:18:e4:d8:25:31:17:bb:f3:
+        cd:60:76:95:23:68:42:f0:ab:da:c6:bd:65:16:37:9b:a9:e1:
+        ee:36:2c:ff:0d:a7:f1:ad:3b:01:c7:97:58:a9:25:85:30:a7:
+        9d:3f:37:17:49:56:7b:3e:cc:f3:49:ee:9a:8e:d8:6d:9f:63:
+        84:90:04:40:83:8f:8b:a4:82:d2:37:dc:0e:fe:2e:17:21:79:
+        af:d8:c6:8c:76:ca:05:24:96:50:d6:48:ba:0c:da:05:79:bf:
+        61:73:39:9f:eb:58:26:48:cd:1b:e2:5f:88:b0:fa:cb:6a:bb:
+        bc:fb:71:a5:d6:6a:20:3e:e6:c4:79:4b:30:99:6b:ef:60:c9:
+        70:17:15:16:bd:49:1c:d6:99:14:dc:e8:d5:0f:c6:4d:d3:f3:
+        63:07:86:e4:da:2f:b3:e1:78:54:c0:3c:7f:f5:e5:9c:c5:13:
+        41:0e:06:75:c0:c5:4d:22:aa:ca:14:aa:8f:42:8e:8a:64:15:
+        29:f6:9e:5e:9b:ae:56:c0:17:1b:c7:aa:0d:b7:3a:a0:5c:5b:
+        5e:bd:d0:8b:8e:07:18:10:61:60:d2:a8:35:72:e5:fd:d1:d7:
+        75:fa:86:94:7e:a6:08:7d:59:21:9f:2d:3f:e0:af:82:6c:20:
+        2d:b9:45:c2
+-----BEGIN CERTIFICATE-----
+MIIEDDCCAvSgAwIBAgIQG/Wl02mbkUye1XYPjvHQZzANBgkqhkiG9w0BAQsFADAf
+MR0wGwYDVQQDDBRLYWhvbG9kZW1vIFJvb3QgQ0EgMTAeFw0yMjA5MjAxMzQyMjVa
+Fw0yNDEyMjMxMzQyMjVaMIGRMQswCQYDVQQGEwJGSTEUMBIGA1UECAwLS3ltZW5s
+YWFrc28xDzANBgNVBAcMBkhhbWluYTEjMCEGA1UECgwaVHJhaW5pbmcgYW5kIERl
+bW9uc3RyYXRpb24xEzARBgNVBAsMCkthaG9sb2RlbW8xITAfBgNVBAMMGGdlbmVz
+aXMtYS5rYWhvbG9kZW1vLm5ldDCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+ggEBAKze6pJQHr9ghdG/tj/MEkrfosRT9e1bxHQsa75iMXQmjNJrXbB5lqKndPGd
+nSDDg9Ddm7QZnLqSCFqS3SU2JdF0px9gDTTZgABYuFdFhVFYIAEyg8yvIlDJauT3
+ruEsKZ5Fecm/Db+g4GhP9HsdmE+2y5jBjmdBfsdGZx72Vo5JoXiiSHv2omg9z965
+qzDJX+76zoEVnu+5hy0dUc84Bc89jiqRPdX/lKHvHE3THxbaRJwQFrjaH/jLfIEE
+k0abhMTNLShea9/RHlEvpeCn3hu9BjZg0n53yBsiPfGMS9YvwCrkwlp7ZAq6eG6E
+gybj2t5lk+rzcPX0yU1Z+jElaGsCAwEAAaOB0DCBzTAJBgNVHRMEAjAAMB0GA1Ud
+DgQWBBSI2/9kNg6PqDufqSG/HDRLZXjvtjBaBgNVHSMEUzBRgBRe03fwE7fRXfHB
+gHNuZ5fOOw8sh6EjpCEwHzEdMBsGA1UEAwwUS2Fob2xvZGVtbyBSb290IENBIDGC
+FFArIN1/JeeDQKqGrxKvbUlLeOInMBMGA1UdJQQMMAoGCCsGAQUFBwMBMAsGA1Ud
+DwQEAwIFoDAjBgNVHREEHDAaghhnZW5lc2lzLWEua2Fob2xvZGVtby5uZXQwDQYJ
+KoZIhvcNAQELBQADggEBAJDa6NcCBidCJ+EY5NglMRe7881gdpUjaELwq9rGvWUW
+N5up4e42LP8Np/GtOwHHl1ipJYUwp50/NxdJVns+zPNJ7pqO2G2fY4SQBECDj4uk
+gtI33A7+Lhchea/Yxox2ygUkllDWSLoM2gV5v2FzOZ/rWCZIzRviX4iw+stqu7z7
+caXWaiA+5sR5SzCZa+9gyXAXFRa9SRzWmRTc6NUPxk3T82MHhuTaL7PheFTAPH/1
+5ZzFE0EOBnXAxU0iqsoUqo9CjopkFSn2nl6brlbAFxvHqg23OqBcW1690IuOBxgQ
+YWDSqDVy5f3R13X6hpR+pgh9WSGfLT/gr4JsIC25RcI=
+-----END CERTIFICATE-----

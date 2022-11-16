@@ -1,0 +1,16 @@
+---
+# - name: create the Kaholo docker-compose
+#   shell: /home/ubuntu/createkaholo.sh
+
+# - name: start the Kaholo docker-compose
+#   shell: /home/ubuntu/startkaholo.sh
+
+- name: create the Kaholo docker-compose
+  shell: 
+    cmd: docker-compose -f ../ci-context-compose.yml -f ../rabbitmq/docker-compose.yml -f ../rabbitmq/docker-compose.override.yml -f ../redis/docker-compose.yml -f ../redis/docker-compose.override.yml -f ../keycloak/docker-compose.yml -f ../docker-development/docker-compose.yml up --no-start
+    chdir: /home/ubuntu/kaholo-enterprise/docker-development
+
+- name: start the Kaholo docker-compose
+  shell: 
+    cmd: docker-compose -f ../ci-context-compose.yml -f ../rabbitmq/docker-compose.yml -f ../rabbitmq/docker-compose.override.yml -f ../redis/docker-compose.yml -f ../redis/docker-compose.override.yml -f ../keycloak/docker-compose.yml -f ../docker-development/docker-compose.yml start
+    chdir: /home/ubuntu/kaholo-enterprise/docker-development

@@ -1,0 +1,11 @@
+---
+- name: get and retag the needed images
+  shell: /home/ubuntu/pullimages.sh
+
+# - name: Build the code layer image
+#   shell: /home/ubuntu/buildcodelayer.sh
+
+- name: Build the code layer image
+  shell:
+    cmd: docker build -f Dockerfile -t code-layer-image ../../../
+    chdir: /home/ubuntu/kaholo-enterprise/cookie-monster/code-layer-service/image

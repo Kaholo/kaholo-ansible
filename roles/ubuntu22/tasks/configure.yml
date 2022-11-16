@@ -1,0 +1,34 @@
+---
+- name: Set hostname
+  command: "hostnamectl --static set-hostname {{ hostname }}"
+
+- name: Set timezone
+  timezone:
+    name: "{{ time_zone }}"
+
+- name: Install some things
+  apt:
+    name:
+    - npm
+    - docker.io
+    - docker-compose
+    - net-tools
+    - sysstat
+    - zip
+    - jq
+    - nodejs
+    - secure-delete
+    update_cache: yes
+
+- name: Install MongoDB Tools
+  apt:
+    deb: https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.6.1.deb 
+
+- name: adding ubuntu to group docker
+  user:
+    name: ubuntu
+    groups: docker
+    append: yes
+
+- name: reset ssh connection
+  meta: reset_connection

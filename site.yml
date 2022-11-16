@@ -1,0 +1,9 @@
+---
+- hosts: kaholo
+  roles:
+  - ubuntu22
+  # - nginx
+  - kaholo
+  vars_files:
+  - vars/kaholo.yml
+  become: yes

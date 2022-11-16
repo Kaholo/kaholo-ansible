@@ -1,0 +1,17 @@
+cookie-monster-code-layer-service
+kaholo-enterprise_prerequisites
+cookie-monster-queues
+console
+kaholo-enterprise_keycloak-prerequisites
+cookie-monster-flow-control
+cookie-monster-error-service
+mongo-setup
+cookie-monster-pipeline-execution-service
+twiddlebug
+kaholo-shared
+cookie-monster-scheduler-service
+cookie-monster-action-execution-service
+server
+development-ssh-monitor
+cookie-monster-state-service
+cookie-monster-mongo-service
