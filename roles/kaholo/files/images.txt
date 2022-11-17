@@ -1,7 +1,6 @@
 cookie-monster-code-layer-service
 kaholo-enterprise_prerequisites
 cookie-monster-queues
-console
 kaholo-enterprise_keycloak-prerequisites
 cookie-monster-flow-control
 cookie-monster-error-service
