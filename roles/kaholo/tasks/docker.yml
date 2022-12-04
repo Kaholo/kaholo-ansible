@@ -1,9 +1,4 @@
 ---
-# - name: create the Kaholo docker-compose
-#   shell: /home/ubuntu/createkaholo.sh
-
-# - name: start the Kaholo docker-compose
-#   shell: /home/ubuntu/startkaholo.sh
 
 - name: create the Kaholo docker-compose
   shell: 

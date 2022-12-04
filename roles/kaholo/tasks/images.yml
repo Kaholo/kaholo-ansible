@@ -1,9 +1,6 @@
 ---
 - name: get and retag the needed images
-  shell: /home/ubuntu/pullimages.sh
-
-# - name: Build the code layer image
-#   shell: /home/ubuntu/buildcodelayer.sh
+  shell: /home/ubuntu/kaholo-pullimages.sh
 
 - name: Build the code layer image
   shell:
