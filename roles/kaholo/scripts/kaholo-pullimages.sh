@@ -3,7 +3,7 @@
 # pulls pre-built kaholo images from a docker image repo
 #
 SERVER=nexus-a.kaholodemo.net
-RELEASE=507-60fa
+RELEASE=507-20230109
 while read image; do
   echo "$image"
   docker pull $SERVER/$RELEASE/$image
