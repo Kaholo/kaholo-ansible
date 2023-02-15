@@ -6,4 +6,4 @@
 #
 # run this only once to affect only first occurance of "off", which is console
 
-echo THIS STEP NO LONGER NECESSARY because console is no longer required
+echo everything in mode 'prod' including console
