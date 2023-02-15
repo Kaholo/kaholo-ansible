@@ -5,5 +5,4 @@
 cd /home/ubuntu/kaholo-enterprise/
 sudo rm -r `find . -name src | grep -v 'node_modules\|shared\|image'`
 sudo rm -r .git
-sudo rm -r bigbird/server/dist
 sudo rm -r e2e

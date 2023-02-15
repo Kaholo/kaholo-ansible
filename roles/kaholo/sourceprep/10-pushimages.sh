@@ -7,7 +7,7 @@
 #
 cd /home/ubuntu/
 SERVER=nexus-a.kaholodemo.net
-RELEASE=507-20230109
+RELEASE=510-20230215
 while read image; do
   echo "$image"
   docker tag $image $SERVER/$RELEASE/$image
