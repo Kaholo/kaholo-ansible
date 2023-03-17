@@ -1,0 +1,12 @@
+---
+- name: Install microk8s and required components
+  apt:
+    name:
+    - tree
+
+- name: snap install microk8s --classic --channel=1.26/stable
+  snap:
+    name: microk8s
+    classic: true
+    channel: 1.26/stable
+

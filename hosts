@@ -4,4 +4,4 @@ ansible_user=ubuntu
 ansible_ssh_private_key_file=~/crypt/keys/gcp/kaholo-demo-fi-admin.pem
 
 [kaholo]
-kaholo-e.kaholodemo.net hostname=kaholo-e.kaholodemo.net time_zone=Europe/Helsinki
+kaholo-d.kaholodemo.net hostname=kaholo-d.kaholodemo.net time_zone=Europe/Helsinki

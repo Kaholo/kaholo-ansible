@@ -1,0 +1,7 @@
+---
+- name: Clone Kaholo Helm Charts
+  git:
+    repo: https://github.com/Kaholo/kaholo-helm.git
+    dest: /home/ubuntu/kaholo-helm
+    clone: yes
+    update: no
