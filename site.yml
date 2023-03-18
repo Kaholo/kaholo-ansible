@@ -1,10 +1,9 @@
 ---
 - hosts: kaholo
   roles:
-  # - ubuntu22
-  # - nginx
-  # - kaholo (deprecated)
-  - microk8s
+  # - { role: ubuntu22, become: true }
+  # - { role: nginx, become: true }
+  # - { role: microk8s, become: false }
+  - { role: kaholohelm, become: false }
   vars_files:
   - vars/kaholo.yml
-  become: true

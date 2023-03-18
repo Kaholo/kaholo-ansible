@@ -2,6 +2,9 @@ This is an Ansible playbook.
 It configures an Ubuntu 22 LTS server to run Kaholo using microk8s (Kubernetes).
 Older versions used docker-compose, this method is deprecated.
 
+To run the playbook you must have on your client machine:
+* Ansible - to run command `ansible-playbook`
+
 minimum System Requirements:
 * 4 vCPU
 * 4 GB RAM

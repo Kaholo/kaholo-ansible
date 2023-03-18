@@ -31,7 +31,7 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
 
-- name: start nginx
+- name: restart nginx
   service:
     name: "nginx"
     enabled: "yes"
