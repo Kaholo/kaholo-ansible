@@ -25,7 +25,7 @@
 
 - name: Get all the scripts in tenants management
   find:
-    paths: ~/kaholo-helm-main/scripts/tenants-managemen
+    paths: ~/kaholo-helm-main/scripts/tenants-management
   register: tenant_scripts
 
 - name: Add aliases expansion option to script
@@ -54,7 +54,7 @@
     cmd: microk8s kubectl create namespace kaholo-poc
     creates: ~/namespace.created
 
-- name: Declare success configuring microk8s
+- name: Record success creating namespace
   file:
     path: ~/namespace.created
     state: touch

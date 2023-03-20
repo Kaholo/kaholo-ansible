@@ -30,6 +30,7 @@
     - microk8s enable dns
     - microk8s enable hostpath-storage
     - microk8s enable dashboard
+    - microk8s enable ingress
   when: mk8sconfig.stat.exists == false
 
 - name: Make dashboard token last forever
@@ -47,15 +48,16 @@
     cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/ports/0/nodePort\", \"value\": 32765}]'"
   when: mk8sconfig.stat.exists == false
 
-- name: Declare success configuring microk8s
+- name: Record success configuring microk8s
   file:
     path: ~/mk8sconfig.done
     state: touch
   when: mk8sconfig.stat.exists == false
 
-- name: Wait for microk8s to start completely
+- name: Wait a minute for microk8s to start completely
   pause:
-    seconds: 30
+    seconds: 60
+  when: mk8sconfig.stat.exists == false
 
 - name: Get dashboard token
   command:

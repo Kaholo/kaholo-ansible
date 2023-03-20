@@ -3,3 +3,4 @@ kaholo_server_key: -----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AM
 docker_password: dckr_pat_73BHHrR9ohdnmG8xozkUja3huE0
 docker_email: kenny.m@kaholo.io
 kaholo_imagetag: 0d29dddc75d06f62ef11ed030ec630696d79b4ea
+kaholo_port: 3000

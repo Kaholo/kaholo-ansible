@@ -14,8 +14,7 @@ The resulting Kaholo instance...
 * has no plugins installed
 * has no license installed
 * has default username/password of admin@kaholo.io/kaholo123
-* listens for HTTP on port 3000
-* kubernetes dashboard HTTPS on localhost:32765
+* kubernetes dashboard https://localhost:32765
 
 For a temporary POC license, please [contact us](https://kaholo.io/contact/).
 
