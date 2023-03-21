@@ -1,1 +1,0 @@
-echo Start Kaholo so that console can do its thing and populate bigbird/server/dist prior to archiverepo step.

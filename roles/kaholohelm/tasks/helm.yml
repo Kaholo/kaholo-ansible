@@ -28,21 +28,21 @@
     paths: ~/kaholo-helm-main/scripts/tenants-management
   register: tenant_scripts
 
-- name: Add aliases expansion option to script
+- name: Add aliases expansion option to scripts
   lineinfile:
     path: "{{ item.path }}"
     line: shopt -s expand_aliases
     insertafter: '^#!/bin/bash'
   with_items: "{{ tenant_scripts.files }}"
 
-- name: Add alias kubectl="microk8s kubectl"
+- name: Add alias kubectl="microk8s kubectl" to scripts
   lineinfile:
     path: "{{ item.path }}"
     line: alias kubectl="microk8s kubectl"
     insertafter: '^shopt -s expand_aliases'
   with_items: "{{ tenant_scripts.files }}"
 
-- name: Add environment variable for helm to find kubernetes
+- name: Add environment variable to scripts to help helm find kubernetes
   lineinfile:
     path: "{{ item.path }}"
     line: export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
@@ -54,14 +54,15 @@
     cmd: microk8s kubectl create namespace kaholo-poc
     creates: ~/namespace.created
 
+- name: Create Docker Kubernetes Secret
+  command:
+    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ docker_password }} --docker-email={{ docker_email }} -n kaholo-poc
+    creates: ~/namespace.created
+
 - name: Record success creating namespace
   file:
     path: ~/namespace.created
     state: touch
-
-- name: Create Docker Kubernetes Secret
-  command:
-    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ docker_password }} --docker-email={{ docker_email }} -n kaholo-poc
 
 - name: Run TENANT_INSTALL script
   shell:
@@ -73,6 +74,7 @@
       -d kaholodemo.net \
       -s kaholo-d \
       -o microk8s-hostpath \
-      -k '{{ kaholo_server_key }}' \
-      -f -b
+      -x microk8s-hostpath \
+      -k {{ kaholo_server_key }} \
+      -b
     creates: ~/kaholo-helm-main/values-poc.yaml

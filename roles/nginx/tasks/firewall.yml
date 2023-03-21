@@ -13,12 +13,6 @@
     - { rule: 'allow', port: '80', proto: 'tcp' }
     - { rule: 'allow', port: '443', proto: 'tcp' }
 
-- name: Remove rule that opened port 3000 for HTTP direct to Kaholo
-  ufw:
-    rule: 'allow'
-    port: '3000'
-    delete: true
-
-- name: Start and enable firewalld
-  ufw:
-    state: enabled
+# - name: Start and enable firewalld
+#   ufw:
+#     state: enabled

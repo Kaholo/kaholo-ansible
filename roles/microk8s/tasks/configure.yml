@@ -30,7 +30,7 @@
     - microk8s enable dns
     - microk8s enable hostpath-storage
     - microk8s enable dashboard
-    - microk8s enable ingress
+    # - microk8s enable ingress (not using this microk8s specific addon)
   when: mk8sconfig.stat.exists == false
 
 - name: Make dashboard token last forever
