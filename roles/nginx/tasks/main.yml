@@ -1,4 +1,0 @@
----
-- include_tasks: prep.yml
-- include_tasks: firewall.yml
-- include_tasks: nginx.yml

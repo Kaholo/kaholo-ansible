@@ -10,5 +10,10 @@ kaholo_server_key: 5843a9f9afd6c9bc4244506ebfb04121
 docker_password: dckr_pat_73BHHrR9ohdnmG8xozkUja3huE0
 docker_email: kenny.m@kaholo.io
 kaholo_imagetag: 0d29dddc75d06f62ef11ed030ec630696d79b4ea
-# kaholo_port is the port on localhost where platform is listening. Nginx will serve this over HTTPS.
-kaholo_port: 80
+# if rekey_ingress is true, put appropriate public.crt and private.key files in roles/kaholohelm/files
+# otherwise set rekey_ingress: false and let nginx use self-signed (untrusted) keys
+rekey_ingress: true
+# namespace will be "kaholo-" + namespace_suffix
+namespace_suffix: poc
+domain: kaholodemo.net
+host: kaholo-d

@@ -2,7 +2,6 @@
 - hosts: kaholo
   roles:
   - { role: ubuntu22, become: true }
-  - { role: nginx, become: true }
   - { role: microk8s, become: false }
   - { role: kaholohelm, become: false }
   vars_files:

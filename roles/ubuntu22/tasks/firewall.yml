@@ -11,8 +11,6 @@
     proto: '{{ item.proto }}'
   with_items:
     - { rule: 'limit', port: '{{ ssh_port | default("22") }}', proto: 'tcp' }
-    - { rule: 'allow', port: '3000', proto: 'tcp' }
-    # - { rule: 'allow', port: '27017', proto: 'tcp' }  mongo not accessible from outside
 
 # - name: Start and enable firewalld
 #   ufw:
