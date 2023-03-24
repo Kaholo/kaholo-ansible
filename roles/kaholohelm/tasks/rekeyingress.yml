@@ -2,40 +2,40 @@
 - name: Copy TLS certificate
   copy:
     src: ../files/public.crt
-    dest: ~/public.crt
+    dest: ~/ansible_temp/public.crt
 
 - name: Copy TLS key
   copy:
     src: ../files/private.key
-    dest: ~/private.key
+    dest: ~/ansible_temp/private.key
 
 - name: Create secret kaholo-{{ namespace_suffix }}-tls
   command:
-    cmd: microk8s kubectl create secret tls kaholo-{{ namespace_suffix }}-tls --cert=public.crt --key=private.key -n kaholo-{{ namespace_suffix }}
-    creates: ~/tls-secret.created
+    cmd: microk8s kubectl create secret tls kaholo-{{ namespace_suffix }}-tls --cert=ansible_temp/public.crt --key=ansible_temp/private.key -n kaholo-{{ namespace_suffix }}
+    creates: ~/ansible_temp/tls-secret.created
 
 - name: Record success creating secret
   file:
-    path: ~/tls-secret.created
+    path: ~/ansible_temp/tls-secret.created
     state: touch
 
 - name: Overwrite key for security reasons
   copy:
     src: ../files/public.crt
-    dest: ~/private.key
+    dest: ~/ansible_temp/private.key
 
 - name: Delete key for security reasons
   file:
-    path: ~/private.key
+    path: ~/ansible_temp/private.key
     state: absent
 
 - name: Tell Ingress {{ namespace_suffix }}.{{ domain }} to use new secret
   command:
     cmd: "microk8s kubectl -n kaholo-{{ namespace_suffix }} patch ingress {{ namespace_suffix }}.{{ domain }} --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/tls/0/secretName\", \"value\": \"kaholo-{{ namespace_suffix }}-tls\"}]'"
-    creates: ~/ingress-rekey.done
+    creates: ~/ansible_temp/ingress-rekey.done
 
 - name: Record success rekeying ingress
   file:
-    path: ~/ingress-rekey.done
+    path: ~/ansible_temp/ingress-rekey.done
     state: touch
 

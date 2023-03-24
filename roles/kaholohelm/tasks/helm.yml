@@ -14,19 +14,19 @@
 
 - name: Unzip Kaholo Helm Project
   unarchive:
-    src: ./files/kaholo-helm-main.zip
+    src: ./files/kaholo-helm.zip
     dest: ~/
-    creates: ~/kaholo-helm-main
+    creates: ~/kaholo-helm
 
 # - name: Check for copy of original chart
-#   stat: path=~/kaholo-helm-main/Chart-orig.yaml
+#   stat: path=~/kaholo-helm/Chart-orig.yaml
 #   register: chart_orig
 
 # - name: Copy original Chart to Chart-orig.yaml
 #   copy:
-#     src: ~/kaholo-helm-main/Chart.yaml
+#     src: ~/kaholo-helm/Chart.yaml
 #     remote_src: true
-#     dest: ~/kaholo-helm-main/Chart-orig.yaml
+#     dest: ~/kaholo-helm/Chart-orig.yaml
 #   when: chart_orig.stat.exists == false
 
 # - name: Remove ingress from Chart
@@ -34,27 +34,27 @@
 #     cmd: |
 #       sed -e '/ingress-nginx/,+3d' Chart-orig.yaml
 #   args:
-#     chdir: ~/kaholo-helm-main/
+#     chdir: ~/kaholo-helm/
 #   register: chart_revised
 
-# - name: Write revised chart to file ~/kaholo-helm-main/Chart.yaml
+# - name: Write revised chart to file ~/kaholo-helm/Chart.yaml
 #   copy:
 #     content: "{{chart_revised.stdout}}\n"
-#     dest: ~/kaholo-helm-main/Chart.yaml
+#     dest: ~/kaholo-helm/Chart.yaml
 
 # - name: Delete the ingress-nginx-4.2.5.tgz chart
 #   file:
-#     path: ~/kaholo-helm-main/charts/ingress-nginx-4.2.5.tgz
+#     path: ~/kaholo-helm/charts/ingress-nginx-4.2.5.tgz
 #     state: absent
 
 - name: Place public license key
   copy:
     src: ./files/kaholo-license.pub
-    dest: ~/kaholo-helm-main/kaholo-license.pub
+    dest: ~/kaholo-helm/kaholo-license.pub
 
 - name: Get all the scripts in tenants management
   find:
-    paths: ~/kaholo-helm-main/scripts/tenants-management
+    paths: ~/kaholo-helm/scripts/tenants-management
   register: tenant_scripts
 
 - name: Add aliases expansion option to scripts
@@ -81,21 +81,21 @@
 - name: Create Namespace
   command:
     cmd: microk8s kubectl create namespace kaholo-{{ namespace_suffix }}
-    creates: ~/namespace.created
+    creates: ~/ansible_temp/namespace.created
 
 - name: Create Docker Kubernetes Secret
   command:
-    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ docker_password }} --docker-email={{ docker_email }} -n kaholo-{{ namespace_suffix }}
-    creates: ~/namespace.created
+    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ dckr_pat }} --docker-email=poc.user@kaholo.io -n kaholo-{{ namespace_suffix }}
+    creates: ~/ansible_temp/namespace.created
 
 - name: Record success creating namespace
   file:
-    path: ~/namespace.created
+    path: ~/ansible_temp/namespace.created
     state: touch
 
 - name: Run TENANT_INSTALL script
   shell:
-    chdir: ~/kaholo-helm-main/scripts/tenants-management/
+    chdir: ~/kaholo-helm/scripts/tenants-management/
     cmd: |
       ./TENANT_INSTALL.sh \
       -t {{ kaholo_imagetag }} \
@@ -106,4 +106,4 @@
       -x microk8s-hostpath \
       -k {{ kaholo_server_key }} \
       -b
-    creates: ~/kaholo-helm-main/values-{{ namespace_suffix }}.yaml
+    creates: ~/kaholo-helm/values-{{ namespace_suffix }}.yaml

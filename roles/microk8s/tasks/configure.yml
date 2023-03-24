@@ -1,6 +1,6 @@
 ---
 - name: Check to see if we already configured microk8s
-  stat: path=~/mk8sconfig.done
+  stat: path=~/ansible_temp/mk8sconfig.done
   register: mk8sconfig
 
 - name: add ubuntu to group microk8s
@@ -43,14 +43,14 @@
     cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard -p '{\"spec\": {\"type\": \"NodePort\"}}'"
   when: mk8sconfig.stat.exists == false
 
-- name: Make dashboard service nodeport 32765
+- name: Make dashboard service nodeport {{ microk8s_dashboard_nodeport }}
   command:
-    cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/ports/0/nodePort\", \"value\": 32765}]'"
+    cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/ports/0/nodePort\", \"value\": {{ microk8s_dashboard_nodeport }}}]'"
   when: mk8sconfig.stat.exists == false
 
 - name: Record success configuring microk8s
   file:
-    path: ~/mk8sconfig.done
+    path: ~/ansible_temp/mk8sconfig.done
     state: touch
   when: mk8sconfig.stat.exists == false
 
@@ -60,12 +60,12 @@
   when: mk8sconfig.stat.exists == false
 
 - name: Get dashboard token
-  command:
-    cmd: microk8s kubectl describe secret microk8s-dashboard-token -n kube-system
-    creates: ~/dashboard-token.txt
+  shell:
+    cmd: |
+      microk8s kubectl describe secret microk8s-dashboard-token -n kube-system | grep 'token:'
   register: dashboard_token
 
 - name: Write token to file ~/dashboard-token.txt
   copy:
-    content: "{{dashboard_token.stdout}}\n"
+    content: "{{ dashboard_token.stdout }}\n"
     dest: ~/dashboard_token.txt

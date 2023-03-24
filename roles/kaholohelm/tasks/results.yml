@@ -1,0 +1,7 @@
+- name: Done!
+  debug:
+    msg:
+      - "Deployment is successful - may take a few minutes to become ready for use."
+      - "Monitor progress and status using Kubernetes Dashboard at: https://{{ host }}.{{ domain }}:{{ microk8s_dashboard_nodeport }}"
+      - "Your dashboard {{ dashboard_token.stdout }}"
+      - "Kaholo will soon be accessible at: https://{{ host }}.{{ domain }}"

@@ -2,18 +2,30 @@
 # kaholo_server_key is used to encrypt passwords and secrets in Kaholo vault.
 # kaholo_server_key should be kept safe like any password or private key
 # kaholo_server_key is required for disaster recovery
-# generate a unique kaholo_server_key using command md5sum on a file or string, for example
+# generate a unique kaholo_server_key using command md5sum on any arbitrary string, for example
 #
-#   echo "This is my arbitrary passphrase" | md5sum
+#   echo "This is an arbitrary string" | md5sum
 #
-kaholo_server_key: 5843a9f9afd6c9bc4244506ebfb04121
-docker_password: dckr_pat_73BHHrR9ohdnmG8xozkUja3huE0
-docker_email: kenny.m@kaholo.io
-kaholo_imagetag: 0d29dddc75d06f62ef11ed030ec630696d79b4ea
-# if rekey_ingress is true, put appropriate public.crt and private.key files in roles/kaholohelm/files
-# otherwise set rekey_ingress: false and let nginx use self-signed (untrusted) keys
-rekey_ingress: true
-# namespace will be "kaholo-" + namespace_suffix
-namespace_suffix: poc
-domain: kaholodemo.net
+kaholo_server_key: fb8df88215dec71c7408c298f8c676f6
+
+# used to pull images from Kaholo-managed repository
+dckr_pat: dckr_pat_73BHHrR9ohdnmG8xozkUja3huE0
+
+# This example results in the following
+# Kaholo URL: https://kaholo-d.kaholodemo.net
+# Dashboard URL: https://kaholo-d.kaholodemo.net:30443
+# Kubernetes namespace: kaholo-test
 host: kaholo-d
+domain: kaholodemo.net
+microk8s_dashboard_nodeport: 30443
+namespace_suffix: test
+
+# run command 'timedatectl list-timezones' for a full list of possibilities
+time_zone: Europe/Helsinki
+
+# kaholo/5.1.1 is be57d8d594d702033a8dd1d9f3c994b3d52b9680
+kaholo_imagetag: be57d8d594d702033a8dd1d9f3c994b3d52b9680
+
+# if rekey_ingress is false, nginx uses self-signed (untrusted) keys
+# if rekey_ingress is true, put appropriate public.crt and private.key files in roles/kaholohelm/files
+rekey_ingress: false
