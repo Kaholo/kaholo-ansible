@@ -12,10 +12,10 @@
   with_items:
     - { rule: 'limit', port: '{{ ssh_port | default("22") }}', proto: 'tcp' }
 
-# - name: Start and enable firewalld
-#   ufw:
-#     state: enabled
-
-- name: Leave firewall disabled
+- name: Start and enable firewall (ufw)
   ufw:
-    state: disabled
+    state: enabled
+
+# - name: Leave firewall disabled
+#   ufw:
+#     state: disabled

@@ -54,7 +54,7 @@
     state: touch
   when: mk8sconfig.stat.exists == false
 
-- name: Wait a minute for microk8s to start completely
+- name: Wait a minute for microk8s dashboard to start up
   pause:
     seconds: 60
   when: mk8sconfig.stat.exists == false

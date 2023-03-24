@@ -1,8 +1,8 @@
 ---
-- name: Set hostname
+- name: Set hostname to {{ host }}.{{ domain }}
   command: "hostnamectl --static set-hostname {{ host }}.{{ domain }}"
 
-- name: Set timezone
+- name: Set timezone to {{ time_zone }}
   timezone:
     name: "{{ time_zone }}"
 
@@ -33,7 +33,7 @@
 - name: Reset SSH connection so group change takes effect
   meta: reset_connection
 
-- name: Create a ansible_temp directory
+- name: Create the ansible_temp directory
   ansible.builtin.file:
     path: ~/ansible_temp
     state: directory
@@ -41,5 +41,6 @@
 
 - name: Add hostname to /etc/hosts for Dashboard Logs
   lineinfile:
-    regex: 
+    regex: '^127.0.0.1 localhost'
     line: 127.0.0.1 localhost {{ host }}.{{ domain }}
+    path: /etc/hosts
