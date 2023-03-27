@@ -38,7 +38,9 @@ For this reason is recommended to get or create a genuine certificate to use wit
 
 Use of Ansible Vault is not required. File `private.key` may be provided in plain text PEM format. (`-----BEGIN PRIVATE KEY-----`)
 
-Also if providing your own certificate, specify `rekey_ingress: true` in `vars/kaholo.yml`. The `host` and `domain` parameters used in `vars/kaholo.yml` must match the certificate's designated URL to gain the browser's trust.
+Also if providing your own certificate, specify `rekey_ingress: provided` in `vars/kaholo.yml`. The `host` and `domain` parameters used in `vars/kaholo.yml` must match the certificate's designated URL to gain the browser's trust.
+
+Alternatively, specify `rekey_ingress: lets-encrypt` to generate keys using Let's Encrypt. For this the domain name must resolve to the correct IP address, which requires a working DNS entry.
 
 ## DNS
 While the playbook will configure the server to use the URL `https://{{host}}.{{domain}}` as specified in file `vars/kaholo.yml`, you network's DNS is required to resolve it. If DNS cannot be configured appropriately, you can add a line to `/etc/hosts` to direct the name to the correct IP address like so:
@@ -61,6 +63,7 @@ A successful deployment will end with a message such as this one.
 
 pre-release checklist:
 * test
-* neutralize kaholo.yml
+* set rekey to Let's Encrypt
+* do not check in secrets-test
 * neutralize key and cert
 * check site and mains

@@ -6,3 +6,5 @@
   - { role: kaholohelm, become: false }
   vars_files:
   - vars/kaholo.yml
+  - vars/secrets.yml
+  

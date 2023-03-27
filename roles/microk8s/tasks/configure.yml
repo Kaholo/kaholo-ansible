@@ -31,6 +31,7 @@
     - microk8s enable hostpath-storage
     - microk8s enable dashboard
     - microk8s enable ingress
+    - microk8s enable cert-manager
   when: mk8sconfig.stat.exists == false
 
 - name: Make dashboard token last forever
