@@ -18,6 +18,7 @@
     - jq
     - nodejs
     - secure-delete
+    - tree
     update_cache: yes
 
 - name: Install MongoDB Tools

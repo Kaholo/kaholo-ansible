@@ -10,13 +10,14 @@ You will need from Kaholo (please [contact us](https://kaholo.io/contact/)):
 System requirements:
 * Ubuntu 22.04 LTS x86/64
 * 4 vCPU
-* 4 GB RAM
+* 8 GB RAM
 * 50 GB disk
 
 To use the playbook you must have:
 * A server meeting system requirements
 * Ansible installed on a client machine - to run command `ansible-playbook`
 * An SSH key to access the server as user "ubuntu" with passwordless sudo privileges
+* Valid DNS A record for IP (if using Let's Encrypt)
 
 Recommended to have:
 * URL with matching cert and key for TLS (HTTPS)
@@ -34,20 +35,24 @@ To use the playbook, adjust file hosts to contain the correct IP address and SSH
 ## HTTPS/TLS Certificates
 Kaholo is not safe to use over standard HTTP. By default Microk8s will create self-signed certificates to secure the connection using TLS, which is safe. However, browsers will not by default trust these certificates. In some cases an exception can be added or the certificate can be added as a trusted root certificate as workaround.
 
+### Provide your own certificates
+
 For this reason is recommended to get or create a genuine certificate to use with your Kaholo server, one issued from a trusted root authority. To do this, replace files `private.key` and `public.crt` in folder `roles/kaholohelm/files` with those you wish to use - before running the playbook.
 
 Use of Ansible Vault is not required. File `private.key` may be provided in plain text PEM format. (`-----BEGIN PRIVATE KEY-----`)
 
 Also if providing your own certificate, specify `rekey_ingress: provided` in `vars/kaholo.yml`. The `host` and `domain` parameters used in `vars/kaholo.yml` must match the certificate's designated URL to gain the browser's trust.
 
-Alternatively, specify `rekey_ingress: lets-encrypt` to generate keys using Let's Encrypt. For this the domain name must resolve to the correct IP address, which requires a working DNS entry.
+### Let's Encrypt
+
+Alternatively, specify `rekey_ingress: lets-encrypt` to generate keys using Let's Encrypt. For this **the domain name must resolve** to the correct IP address, which requires a working DNS entry.
 
 ## DNS
 While the playbook will configure the server to use the URL `https://{{host}}.{{domain}}` as specified in file `vars/kaholo.yml`, you network's DNS is required to resolve it. If DNS cannot be configured appropriately, you can add a line to `/etc/hosts` to direct the name to the correct IP address like so:
 
     35.228.71.219   kaholo-d.kaholodemo.net
 
-This must be repeated on every client machine that will use the URL. DNS is required to use the URL only, i.e. to use Kaholo. Deployment can proceed without a working DNS.
+This must be repeated on every client machine that will use the URL. DNS is required to use the URL only, i.e. to use Kaholo. Deployment can proceed without a working DNS. Set either `rekey_ingress: none` or `rekey_ingress: provided` (and provide valid cert and key). Option `rekey_ingress: letsencrypt` requires a valid DNS entry to work.
 
 ## Success
 A successful deployment will end with a message such as this one.
