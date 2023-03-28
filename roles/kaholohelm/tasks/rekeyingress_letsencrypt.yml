@@ -1,0 +1,20 @@
+---
+- name: Place Kaholo Certificate yaml
+  template:
+    src: ../templates/kaholo_cert.yml
+    dest: ~/ansible_temp/kaholo_cert.yml
+
+- name: Apply Kaholo Certificate yaml
+  command:
+    cmd: "microk8s kubectl apply -f ~/ansible_temp/kaholo_cert.yml"
+
+- name: Tell Ingress {{ namespace_suffix }}.{{ domain }} to use new secret
+  command:
+    cmd: "microk8s kubectl -n kaholo-{{ namespace_suffix }} patch ingress {{ namespace_suffix }}.{{ domain }} --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/tls/0/secretName\", \"value\": \"kaholo-{{ namespace_suffix }}-tls\"}]'"
+    creates: ~/ansible_temp/ingress-rekey.done
+
+- name: Record success rekeying ingress
+  file:
+    path: ~/ansible_temp/ingress-rekey.done
+    state: touch
+

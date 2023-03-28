@@ -1,12 +1,12 @@
 ---
-- name: Set hostname
-  command: "hostnamectl --static set-hostname {{ hostname }}"
+- name: Set hostname to {{ host }}.{{ domain }}
+  command: "hostnamectl --static set-hostname {{ host }}.{{ domain }}"
 
-- name: Set timezone
+- name: Set timezone to {{ time_zone }}
   timezone:
     name: "{{ time_zone }}"
 
-- name: Install some things
+- name: Install Docker and assorted utilities
   apt:
     name:
     - npm
@@ -18,17 +18,30 @@
     - jq
     - nodejs
     - secure-delete
+    - tree
     update_cache: yes
 
 - name: Install MongoDB Tools
   apt:
     deb: https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x86_64-100.6.1.deb 
 
-- name: adding ubuntu to group docker
+- name: Add ubuntu to group docker
   user:
     name: ubuntu
     groups: docker
     append: yes
 
-- name: reset ssh connection
+- name: Reset SSH connection so group change takes effect
   meta: reset_connection
+
+- name: Create the ansible_temp directory
+  ansible.builtin.file:
+    path: ~/ansible_temp
+    state: directory
+  become: false
+
+- name: Add hostname to /etc/hosts for Dashboard Logs
+  lineinfile:
+    regex: '^127.0.0.1 localhost'
+    line: 127.0.0.1 localhost {{ host }}.{{ domain }}
+    path: /etc/hosts

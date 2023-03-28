@@ -1,0 +1,20 @@
+---
+- name: Install ufw
+  apt:
+    package: ufw
+    state: present
+  become: true
+
+- name: Configure ufw to open ports 80, 443, {{ microk8s_dashboard_nodeport }} (microk8s dashboard)
+  ufw:
+    rule: '{{ item.rule }}'
+    port: '{{ item.port }}'
+    proto: '{{ item.proto }}'
+  with_items:
+    - { rule: 'allow', port: '80', proto: 'tcp' }
+    - { rule: 'allow', port: '443', proto: 'tcp' }
+    - { rule: 'allow', port: '{{ microk8s_dashboard_nodeport }}', proto: 'tcp' }
+  become: true
+    
+# sudo ufw allow in on cni0 && sudo ufw allow out on cni0
+# sudo ufw default allow routed

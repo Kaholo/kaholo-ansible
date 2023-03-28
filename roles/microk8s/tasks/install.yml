@@ -1,0 +1,7 @@
+---
+- name: snap install microk8s --classic --channel=1.26/stable
+  snap:
+    name: microk8s
+    classic: true
+    channel: 1.26/stable
+  become: true

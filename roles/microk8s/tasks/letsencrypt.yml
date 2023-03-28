@@ -1,0 +1,51 @@
+---
+- name: Check to see if we already enabled cert-manager
+  stat: path=~/ansible_temp/cert-manager.enabled
+  register: certmanager
+
+- name: Enable microk8s cert-manager
+  command:
+    cmd: "{{ item }}"
+  with_items:
+    - microk8s enable cert-manager
+  when: certmanager.stat.exists == false
+
+- name: Wait a bit for cert-manager to start up
+  pause:
+    seconds: 30
+  when: certmanager.stat.exists == false
+
+- name: Record success enabling cert-manager
+  file:
+    path: ~/ansible_temp/cert-manager.enabled
+    state: touch
+  when: certmanager.stat.exists == false
+
+- name: Place ClusterIssuer yaml
+  template:
+    src: ../templates/clusterissuer.yml
+    dest: ~/ansible_temp/clusterissuer.yml
+
+- name: Apply ClusterIssuer template
+  command:
+    cmd: "microk8s kubectl apply -f ~/ansible_temp/clusterissuer.yml"
+
+- name: Place Dashboard Certificate yaml
+  template:
+    src: ../templates/dashboard_cert.yml
+    dest: ~/ansible_temp/dashboard_cert.yml
+
+- name: Apply Dashboard Certificate yaml
+  command:
+    cmd: "microk8s kubectl apply -f ~/ansible_temp/dashboard_cert.yml"
+
+# args:
+#   - '--auto-generate-certificates'   <-- remove
+#   - '--tls-cert-file=/tls.crt'       <-- add
+#   - '--tls-key-file=/tls.key'        <-- add
+#   - '--namespace=kube-system'
+#   - '--token-ttl=0'
+
+- name: Make dashboard use the new cert
+  command:
+    cmd: "microk8s kubectl -n kube-system patch deployment kubernetes-dashboard --type=json -p='[{\"op\":\"replace\",\"path\":\"/spec/template/spec/containers/0/args\",\"value\":[\"--tls-cert-file=/tls.crt\",\"--tls-key-file=/tls.key\",\"--token-ttl=0\",\"--namespace=kube-system\"]}]'"

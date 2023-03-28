@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kaholo-{{ namespace_suffix }}-tls
+  namespace: kaholo-{{ namespace_suffix }}
+spec:
+  secretName: kaholo-{{ namespace_suffix }}-tls
+  duration: 2160h
+  renewBefore: 360h
+  commonName: {{ host }}.{{ domain }}
+  dnsNames:
+  - {{ host }}.{{ domain }}
+  issuerRef:
+    name: lets-encrypt
+    kind: ClusterIssuer

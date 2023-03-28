@@ -1,0 +1,6 @@
+---
+- include_tasks: install.yml
+- include_tasks: configure.yml
+- include_tasks: firewall.yml
+- include_tasks: letsencrypt.yml
+  when: rekey_ingress == "letsencrypt"

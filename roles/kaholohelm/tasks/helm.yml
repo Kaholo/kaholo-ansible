@@ -1,0 +1,109 @@
+---
+# - name: Clone Kaholo Helm Charts
+#   git:
+#     repo: https://github.com/Kaholo/kaholo-helm.git
+#     dest: ~/kaholo-helm
+#     clone: yes
+#     update: no
+
+- name: snap install helm --classic
+  snap:
+    name: helm
+    classic: true
+  become: true
+
+- name: Unzip Kaholo Helm Project
+  unarchive:
+    src: ./files/kaholo-helm.zip
+    dest: ~/
+    creates: ~/kaholo-helm
+
+# - name: Check for copy of original chart
+#   stat: path=~/kaholo-helm/Chart-orig.yaml
+#   register: chart_orig
+
+# - name: Copy original Chart to Chart-orig.yaml
+#   copy:
+#     src: ~/kaholo-helm/Chart.yaml
+#     remote_src: true
+#     dest: ~/kaholo-helm/Chart-orig.yaml
+#   when: chart_orig.stat.exists == false
+
+# - name: Remove ingress from Chart
+#   command:
+#     cmd: |
+#       sed -e '/ingress-nginx/,+3d' Chart-orig.yaml
+#   args:
+#     chdir: ~/kaholo-helm/
+#   register: chart_revised
+
+# - name: Write revised chart to file ~/kaholo-helm/Chart.yaml
+#   copy:
+#     content: "{{chart_revised.stdout}}\n"
+#     dest: ~/kaholo-helm/Chart.yaml
+
+# - name: Delete the ingress-nginx-4.2.5.tgz chart
+#   file:
+#     path: ~/kaholo-helm/charts/ingress-nginx-4.2.5.tgz
+#     state: absent
+
+- name: Place public license key
+  copy:
+    src: ./files/kaholo-license.pub
+    dest: ~/kaholo-helm/kaholo-license.pub
+
+- name: Get all the scripts in tenants management
+  find:
+    paths: ~/kaholo-helm/scripts/tenants-management
+  register: tenant_scripts
+
+- name: Add aliases expansion option to scripts
+  lineinfile:
+    path: "{{ item.path }}"
+    line: shopt -s expand_aliases
+    insertafter: '^#!/bin/bash'
+  with_items: "{{ tenant_scripts.files }}"
+
+- name: Add alias kubectl="microk8s kubectl" to scripts
+  lineinfile:
+    path: "{{ item.path }}"
+    line: alias kubectl="microk8s kubectl"
+    insertafter: '^shopt -s expand_aliases'
+  with_items: "{{ tenant_scripts.files }}"
+
+- name: Add environment variable to scripts to help helm find kubernetes
+  lineinfile:
+    path: "{{ item.path }}"
+    line: export KUBECONFIG=/var/snap/microk8s/current/credentials/client.config
+    insertafter: '^alias kubectl'
+  with_items: "{{ tenant_scripts.files }}"
+
+- name: Create Namespace
+  command:
+    cmd: microk8s kubectl create namespace kaholo-{{ namespace_suffix }}
+    creates: ~/ansible_temp/namespace.created
+
+- name: Create Docker Kubernetes Secret
+  command:
+    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ dckr_pat }} --docker-email=poc.user@kaholo.io -n kaholo-{{ namespace_suffix }}
+    creates: ~/ansible_temp/namespace.created
+
+- name: Record success creating namespace
+  file:
+    path: ~/ansible_temp/namespace.created
+    state: touch
+
+- name: Run TENANT_INSTALL script
+  shell:
+    chdir: ~/kaholo-helm/scripts/tenants-management/
+    cmd: |
+      ./TENANT_INSTALL.sh \
+      -t {{ kaholo_imagetag }} \
+      -n {{ namespace_suffix }} \
+      -d {{ domain }} \
+      -s {{ host }} \
+      -o microk8s-hostpath \
+      -x microk8s-hostpath \
+      -k {{ kaholo_server_key }} \
+      -b
+    creates: ~/kaholo-helm/values-{{ namespace_suffix }}.yaml

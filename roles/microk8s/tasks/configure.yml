@@ -1,0 +1,71 @@
+---
+- name: Check to see if we already configured microk8s
+  stat: path=~/ansible_temp/mk8sconfig.done
+  register: mk8sconfig
+
+- name: add ubuntu to group microk8s
+  user:
+    name: ubuntu
+    groups: microk8s
+    append: yes
+  when: mk8sconfig.stat.exists == false
+  become: true
+  
+- name: reset ssh connection so group change takes effect
+  meta: reset_connection
+
+- name: Add alias for kubectl
+  lineinfile:
+    path: '~/.bash_aliases'
+    regexp: '^alias kubectl='
+    line: 'alias kubectl="microk8s kubectl"'
+    state: present
+    create: true
+  when: mk8sconfig.stat.exists == false
+
+- name: Enable microk8s addons
+  command:
+    cmd: "{{ item }}"
+  with_items:
+    - microk8s enable dns
+    - microk8s enable hostpath-storage
+    - microk8s enable dashboard
+    - microk8s enable ingress
+  when: mk8sconfig.stat.exists == false
+
+- name: Make dashboard token last forever
+  command:
+    cmd: "microk8s kubectl -n kube-system patch deployment kubernetes-dashboard --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/template/spec/containers/0/args/-\", \"value\": \"--token-ttl=0\"}]'"
+  when: mk8sconfig.stat.exists == false
+
+- name: Make dashboard service use NodePort instead of ClusterIP
+  command:
+    cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard -p '{\"spec\": {\"type\": \"NodePort\"}}'"
+  when: mk8sconfig.stat.exists == false
+
+- name: Make dashboard service nodeport {{ microk8s_dashboard_nodeport }}
+  command:
+    cmd: "microk8s kubectl -n kube-system patch service kubernetes-dashboard --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/ports/0/nodePort\", \"value\": {{ microk8s_dashboard_nodeport }}}]'"
+  when: mk8sconfig.stat.exists == false
+
+- name: Record success configuring microk8s
+  file:
+    path: ~/ansible_temp/mk8sconfig.done
+    state: touch
+  when: mk8sconfig.stat.exists == false
+
+- name: Wait a minute for microk8s dashboard to start up
+  pause:
+    seconds: 60
+  when: mk8sconfig.stat.exists == false
+
+- name: Get dashboard token
+  shell:
+    cmd: |
+      microk8s kubectl describe secret microk8s-dashboard-token -n kube-system | grep 'token:'
+  register: dashboard_token
+
+- name: Write token to file ~/dashboard-token.txt
+  copy:
+    content: "{{ dashboard_token.stdout }}\n"
+    dest: ~/dashboard_token.txt
