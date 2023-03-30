@@ -1,11 +1,4 @@
 ---
-# - name: Clone Kaholo Helm Charts
-#   git:
-#     repo: https://github.com/Kaholo/kaholo-helm.git
-#     dest: ~/kaholo-helm
-#     clone: yes
-#     update: no
-
 - name: snap install helm --classic
   snap:
     name: helm
@@ -18,34 +11,11 @@
     dest: ~/
     creates: ~/kaholo-helm
 
-# - name: Check for copy of original chart
-#   stat: path=~/kaholo-helm/Chart-orig.yaml
-#   register: chart_orig
-
-# - name: Copy original Chart to Chart-orig.yaml
-#   copy:
-#     src: ~/kaholo-helm/Chart.yaml
-#     remote_src: true
-#     dest: ~/kaholo-helm/Chart-orig.yaml
-#   when: chart_orig.stat.exists == false
-
-# - name: Remove ingress from Chart
-#   command:
-#     cmd: |
-#       sed -e '/ingress-nginx/,+3d' Chart-orig.yaml
-#   args:
-#     chdir: ~/kaholo-helm/
-#   register: chart_revised
-
-# - name: Write revised chart to file ~/kaholo-helm/Chart.yaml
-#   copy:
-#     content: "{{chart_revised.stdout}}\n"
-#     dest: ~/kaholo-helm/Chart.yaml
-
-# - name: Delete the ingress-nginx-4.2.5.tgz chart
-#   file:
-#     path: ~/kaholo-helm/charts/ingress-nginx-4.2.5.tgz
-#     state: absent
+- name: Loosen up default network policy
+  lineinfile:
+    path: ~/kaholo-helm/values.yaml
+    search_string: allowPotentialCommandInjectionK8S
+    line: '  allowPotentialCommandInjectionK8S: true'
 
 - name: Place public license key
   copy:
