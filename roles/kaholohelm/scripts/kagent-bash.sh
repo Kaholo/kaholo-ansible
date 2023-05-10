@@ -1,5 +1,5 @@
 #!/bin/bash
-NAMESPACE_SUFFIX={{ mk8s_namespace }}
+MK8S_NAMESPACE={{ mk8s_namespace }}
 shopt -s expand_aliases
 alias kubectl="microk8s kubectl"
-kubectl exec -it -n kaholo-$NAMESPACE_SUFFIX `kubectl get pods -n kaholo-$NAMESPACE_SUFFIX | grep agent | awk '{ print $1 }'` -- bash
+kubectl exec -it -n $MK8S_NAMESPACE `kubectl get pods -n $MK8S_NAMESPACE | grep agent | awk '{ print $1 }'` -- bash
