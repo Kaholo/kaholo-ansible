@@ -9,9 +9,9 @@
     src: ../files/private.key
     dest: ~/ansible_temp/private.key
 
-- name: Create secret kaholo-{{ namespace_suffix }}-tls
+- name: Create secret {{ mk8s_namespace }}-tls
   command:
-    cmd: microk8s kubectl create secret tls kaholo-{{ namespace_suffix }}-tls --cert=ansible_temp/public.crt --key=ansible_temp/private.key -n kaholo-{{ namespace_suffix }}
+    cmd: microk8s kubectl create secret tls {{ mk8s_namespace }}-tls --cert=ansible_temp/public.crt --key=ansible_temp/private.key -n {{ mk8s_namespace }}
     creates: ~/ansible_temp/tls-secret.created
 
 - name: Record success creating secret
@@ -29,9 +29,9 @@
     path: ~/ansible_temp/private.key
     state: absent
 
-- name: Tell Ingress {{ namespace_suffix }}.{{ domain }} to use new secret
+- name: Tell Ingress {{ mk8s_namespace }}.{{ domain }} to use new secret
   command:
-    cmd: "microk8s kubectl -n kaholo-{{ namespace_suffix }} patch ingress {{ namespace_suffix }}.{{ domain }} --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/tls/0/secretName\", \"value\": \"kaholo-{{ namespace_suffix }}-tls\"}]'"
+    cmd: "microk8s kubectl -n {{ mk8s_namespace }} patch ingress {{ mk8s_namespace }}.{{ domain }} --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/tls/0/secretName\", \"value\": \"{{ mk8s_namespace }}-tls\"}]'"
     creates: ~/ansible_temp/ingress-rekey.done
 
 - name: Record success rekeying ingress

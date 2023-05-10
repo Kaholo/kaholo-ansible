@@ -1,5 +1,5 @@
 #!/bin/bash
-NAMESPACE_SUFFIX={{namespace_suffix}}
+NAMESPACE_SUFFIX={{ mk8s_namespace }}
 BAKDIR258=$NAMESPACE_SUFFIX-backup-$(date -I)
 mkdir $BAKDIR258
 cd kaholo-helm/scripts/tenants-management

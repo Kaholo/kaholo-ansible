@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: kaholo-{{ namespace_suffix }}-tls
-  namespace: kaholo-{{ namespace_suffix }}
+  name: {{ mk8s_namespace }}-tls
+  namespace: {{ mk8s_namespace }}
 spec:
-  secretName: kaholo-{{ namespace_suffix }}-tls
+  secretName: {{ mk8s_namespace }}-tls
   duration: 2160h
   renewBefore: 360h
   commonName: {{ host }}.{{ domain }}

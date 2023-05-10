@@ -9,18 +9,18 @@ You will need from Kaholo (please [contact us](https://kaholo.io/contact/)):
 
 System requirements:
 * Ubuntu 22.04 LTS x86/64
-* 4 vCPU
+* 8 vCPU
 * 8 GB RAM
-* 50 GB disk
+* 100 GB disk
 
 To use the playbook you must have:
 * A server meeting system requirements
 * Ansible installed on a client machine - to run command `ansible-playbook`
 * An SSH key to access the server as user "ubuntu" with passwordless sudo privileges
-* Valid DNS A record for IP (if using Let's Encrypt)
+* Valid DNS A record that resolves to your IP address (if using Let's Encrypt)
 
 Recommended to have:
-* URL with matching cert and key for TLS (HTTPS)
+* DNS A record with matching cert and key for TLS (HTTPS) (if NOT using Let's Encrypt)
 
 The resulting Kaholo instance...
 * has no plugins installed
@@ -28,7 +28,12 @@ The resulting Kaholo instance...
 * will prompt to create initial (superadmin) user account
 
 ## Basic use
-To use the playbook, adjust file hosts to contain the correct IP address and SSH key and then run ansible.
+To use the playbook, adjust the following files appropriately:
+* hosts
+* vars/secrets.yml
+* vars/kaholo.yml
+
+Then run command:
 
     ansible-playbook site.yml
 
@@ -64,11 +69,11 @@ A successful deployment will end with a message such as this one.
         "Kaholo will soon be accessible at: https://kaholo-d.kaholodemo.net"
     ]
 
-20230323 kenny.m@kaholo.io
+20230510 kenny.m@kaholo.io
 
 pre-release checklist:
 * test
 * set rekey to Let's Encrypt
-* do not check in secrets-test
+* do not check in custom vars files
 * neutralize key and cert
 * check site and mains
