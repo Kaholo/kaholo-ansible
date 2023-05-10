@@ -1,7 +1,12 @@
+# ansible_connection and ansible_user must not be changed
+# change ansible_ssh_private_key_file to point to the private ssh key that can access the server
+
 [all:vars]
 ansible_connection=ssh
 ansible_user=ubuntu
 ansible_ssh_private_key_file=~/crypt/keys/gcp/kaholo-demo-fi-admin.pem
 
+# in section [kaholo] list by DNS name or IP address the servers were Kaholo should be deployed
+
 [kaholo]
-35.228.71.229
+kaholotrial.kaholodemo.net
