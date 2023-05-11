@@ -9,7 +9,7 @@ microk8s_dashboard_nodeport: 30443
 namespace_suffix: mynamespace
 
 # run command 'timedatectl list-timezones' for a full list of possibilities
-time_zone: Asia/Singapore
+time_zone: Europe/Helsinki
 
 # kaholo/5.1.1 is be57d8d594d702033a8dd1d9f3c994b3d52b9680
 kaholo_imagetag: be57d8d594d702033a8dd1d9f3c994b3d52b9680

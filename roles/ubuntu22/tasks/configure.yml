@@ -3,8 +3,7 @@
   command: "hostnamectl --static set-hostname {{ host }}.{{ domain }}"
 
 - name: Set timezone to {{ time_zone }}
-  timezone:
-    name: "{{ time_zone }}"
+  command: "timedatectl set-timezone {{ time_zone }}"
 
 - name: Install Docker and assorted utilities
   apt:
