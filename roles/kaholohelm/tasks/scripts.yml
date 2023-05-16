@@ -10,4 +10,5 @@
     - scripts/kagent-bash.sh
     - scripts/kagent-logs.sh
     - scripts/kaholo-backup.sh
+    - scripts/kaholo-restore.sh
     - scripts/kletsencrypt.sh
