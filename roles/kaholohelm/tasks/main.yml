@@ -4,4 +4,5 @@
   when: rekey_ingress == "provided"
 - include_tasks: rekeyingress_letsencrypt.yml
   when: rekey_ingress == "letsencrypt"
+- include_tasks: scripts.yml
 - include_tasks: results.yml

@@ -1,0 +1,14 @@
+---
+- name: template over assorted helpful scripts
+  template:
+    src: "{{item}}"
+    dest: /home/ubuntu/
+    owner: ubuntu
+    group: ubuntu
+    mode: a+x
+  with_items:
+    - scripts/kagent-bash.sh
+    - scripts/kagent-logs.sh
+    - scripts/kaholo-backup.sh
+    - scripts/kaholo-restore.sh
+    - scripts/kletsencrypt.sh

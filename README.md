@@ -7,28 +7,51 @@ You will need from Kaholo (please [contact us](https://kaholo.io/contact/)):
 * A Docker Hub personal access token (dckr_pat) to pull the kaholo images during deployment
 * A license file to use Kaholo after installation
 
-System requirements:
+System requirements (minimum):
+* Ubuntu 22.04 LTS x86/64
+* 2 vCPU
+* 4 GB RAM
+* 50 GB disk
+
+System requirements (recommended):
 * Ubuntu 22.04 LTS x86/64
 * 4 vCPU
 * 8 GB RAM
-* 50 GB disk
+* 100 GB disk
+
+NOTE: Variable agent_resources in vars/kaholo.yml must be matched with actual vCPU and RAM resources. Any vCPU/RAM in excess of 2vCPU/4GB may be added to the limits for the Kaholo agent. This will allow for more pipelines running simultaneously or for any pipeline to run faster. Setting agent limits too high leaves the Kaholo server with too few resources to start up and run reliably. Setting agent limits too low restricts performance of pipeline executions.
+
+Note that 2vCPU is the bare minimum requirement. Some cloud providers have 2vCPU configuration that are "shared", meaning the real available compute power is less than 2vCPU, for example GCP e2-medium. These instances do NOT have sufficient resources to run Kaholo. This is evident when viewing the Kubernetes dashboard workload, which will show failed and pending pods long after the typical 10-minute startup period. An example of a minimal working instance in GCP is e2-standard-2.
+
+2 vCPU / 4GB RAM (minimum):
+
+    agent_resources: '{"limits":{"cpu":"300m","memory":"1Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
+
+4 vCPU / 8GB RAM (recommended):
+
+    agent_resources: '{"limits":{"cpu":"2","memory":"4Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
 
 To use the playbook you must have:
-* A server meeting system requirements
+* A server or VM meeting system requirements
 * Ansible installed on a client machine - to run command `ansible-playbook`
 * An SSH key to access the server as user "ubuntu" with passwordless sudo privileges
-* Valid DNS A record for IP (if using Let's Encrypt)
+* Valid DNS A record that resolves to your IP address (if using Let's Encrypt)
 
 Recommended to have:
-* URL with matching cert and key for TLS (HTTPS)
+* DNS A record with matching cert and key for TLS (HTTPS) (if NOT using Let's Encrypt)
 
 The resulting Kaholo instance...
 * has no plugins installed
 * has no license installed
-* will prompt to create initial (superadmin) user account
+* will prompt to create initial Admin user account
 
 ## Basic use
-To use the playbook, adjust file hosts to contain the correct IP address and SSH key and then run ansible.
+To use the playbook, adjust the following files appropriately:
+* hosts
+* vars/secrets.yml
+* vars/kaholo.yml
+
+Then run command:
 
     ansible-playbook site.yml
 
@@ -64,11 +87,11 @@ A successful deployment will end with a message such as this one.
         "Kaholo will soon be accessible at: https://kaholo-d.kaholodemo.net"
     ]
 
-20230323 kenny.m@kaholo.io
+20230510 kenny.m@kaholo.io
 
 pre-release checklist:
 * test
 * set rekey to Let's Encrypt
-* do not check in secrets-test
+* do not check in custom vars files
 * neutralize key and cert
 * check site and mains

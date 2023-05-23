@@ -5,7 +5,7 @@
     state: present
   become: true
 
-- name: Configure ufw to open ports 80, 443, {{ microk8s_dashboard_nodeport }} (microk8s dashboard)
+- name: Configure ufw to open ports 80, 443, {{ microk8s_dashboard_nodeport }} (microk8s dashboard), 2375 (docker)
   ufw:
     rule: '{{ item.rule }}'
     port: '{{ item.port }}'
@@ -14,6 +14,7 @@
     - { rule: 'allow', port: '80', proto: 'tcp' }
     - { rule: 'allow', port: '443', proto: 'tcp' }
     - { rule: 'allow', port: '{{ microk8s_dashboard_nodeport }}', proto: 'tcp' }
+    - { rule: 'allow', port: '2375', proto: 'tcp'}
   become: true
     
 # sudo ufw allow in on cni0 && sudo ufw allow out on cni0
