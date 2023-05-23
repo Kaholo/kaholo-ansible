@@ -7,14 +7,32 @@ You will need from Kaholo (please [contact us](https://kaholo.io/contact/)):
 * A Docker Hub personal access token (dckr_pat) to pull the kaholo images during deployment
 * A license file to use Kaholo after installation
 
-System requirements:
+System requirements (minimum):
 * Ubuntu 22.04 LTS x86/64
-* 8 vCPU
+* 2 vCPU
+* 4 GB RAM
+* 50 GB disk
+
+System requirements (recommended):
+* Ubuntu 22.04 LTS x86/64
+* 4 vCPU
 * 8 GB RAM
 * 100 GB disk
 
+NOTE: Variable agent_resources in vars/kaholo.yml must be matched with actual vCPU and RAM resources. Any vCPU/RAM in excess of 2vCPU/4GB may be added to the limits for the Kaholo agent. This will allow for more pipelines running simultaneously or for any pipeline to run faster. Setting agent limits too high leaves the Kaholo server with too few resources to start up and run reliably. Setting agent limits too low restricts performance of pipeline executions.
+
+Note that 2vCPU is the bare minimum requirement. Some cloud providers have 2vCPU configuration that are "shared", meaning the real available compute power is less than 2vCPU, for example GCP e2-medium. These instances do NOT have sufficient resources to run Kaholo. This is evident when viewing the Kubernetes dashboard workload, which will show failed and pending pods long after the typical 10-minute startup period. An example of a minimal working instance in GCP is e2-standard-2.
+
+2 vCPU / 4GB RAM (minimum):
+
+    agent_resources: '{"limits":{"cpu":"300m","memory":"1Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
+
+4 vCPU / 8GB RAM (recommended):
+
+    agent_resources: '{"limits":{"cpu":"2","memory":"4Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
+
 To use the playbook you must have:
-* A server meeting system requirements
+* A server or VM meeting system requirements
 * Ansible installed on a client machine - to run command `ansible-playbook`
 * An SSH key to access the server as user "ubuntu" with passwordless sudo privileges
 * Valid DNS A record that resolves to your IP address (if using Let's Encrypt)
@@ -25,7 +43,7 @@ Recommended to have:
 The resulting Kaholo instance...
 * has no plugins installed
 * has no license installed
-* will prompt to create initial (superadmin) user account
+* will prompt to create initial Admin user account
 
 ## Basic use
 To use the playbook, adjust the following files appropriately:
