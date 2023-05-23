@@ -6,7 +6,7 @@
 host: kaholotrial
 domain: kaholodemo.net
 microk8s_dashboard_nodeport: 30443
-namespace_suffix: mynamespace
+mk8s_namespace: mynamespace
 
 # run command 'timedatectl list-timezones' for a full list of possibilities
 time_zone: Europe/Helsinki
@@ -18,3 +18,7 @@ kaholo_imagetag: be57d8d594d702033a8dd1d9f3c994b3d52b9680
 # if rekey_ingress is "provided", put appropriate public.crt and private.key files in roles/kaholohelm/files
 # if rekey_ingress is "letsencrypt", use Let's Encrypt to automatically provide TLS cert and key.
 rekey_ingress: letsencrypt
+
+# kaholo workloads needs at least 1,5 CPU core and 4 Gi of RAM memory, the rest can be used by the agent
+# example: for VM that has 2 cores and 8 Gi of RAM memory, set below to '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"400m","memory":"3Gi"}}'
+agent_resources: '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"400m","memory":"3Gi"}}'
