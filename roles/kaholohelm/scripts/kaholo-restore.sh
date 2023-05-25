@@ -1,5 +1,6 @@
 #!/bin/bash
 MK8S_NAMESPACE={{ mk8s_namespace }}
+MK8S_SOURCE_NAMESPACE={{ mk8s_namespace }}
 CURRENTDIR=$(pwd)
 if [ "$#" -ne 1 ]
 then
@@ -10,4 +11,4 @@ then
 fi
 echo "Restoring backup located in $CURRENTDIR/$1/"
 cd kaholo-helm/scripts/tenants-management
-./TENANT_RESTORE.sh $MK8S_NAMESPACE $MK8S_NAMESPACE $CURRENTDIR/$1/
+./TENANT_RESTORE.sh $MK8S_NAMESPACE $MK8S_SOURCE_NAMESPACE $CURRENTDIR/$1/
