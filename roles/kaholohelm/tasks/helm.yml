@@ -75,7 +75,5 @@
       -o microk8s-hostpath \
       -x microk8s-hostpath \
       -k {{ kaholo_server_key }} \
-      -u '{{ agent_resources }}' \
-      -b \
-      -m
+      -u '{{ agent_resources }}'
     creates: ~/kaholo-helm/values-{{ mk8s_namespace }}.yaml
