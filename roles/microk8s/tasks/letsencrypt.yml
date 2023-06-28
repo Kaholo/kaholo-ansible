@@ -39,11 +39,6 @@
   command:
     cmd: "microk8s kubectl apply -f ~/ansible_temp/dashboard_cert.yml"
 
-- name: Wait a bit for dashboard cert to be issued
-  pause:
-    seconds: 30
-  when: certmanager.stat.exists == false
-
 # args:
 #   - '--auto-generate-certificates'   <-- remove
 #   - '--tls-cert-file=/tls.crt'       <-- add
