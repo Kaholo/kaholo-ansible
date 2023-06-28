@@ -11,7 +11,6 @@
 - name: Wait a few seconds for apply to take effect
   pause:
     seconds: 10
-  when: mk8sconfig.stat.exists == false
 
 - name: Tell Ingress {{ mk8s_namespace }}.{{ domain }} to use new secret
   command:
