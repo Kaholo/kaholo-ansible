@@ -12,7 +12,8 @@ mk8s_namespace: mynamespace
 time_zone: Europe/Helsinki
 
 # kaholo/5.1.1 is be57d8d594d702033a8dd1d9f3c994b3d52b9680
-kaholo_imagetag: be57d8d594d702033a8dd1d9f3c994b3d52b9680
+# kaholo/6.1.0 is d69bc4ad3fc5153f37a4aff383987beaa10f7be1
+kaholo_imagetag: d69bc4ad3fc5153f37a4aff383987beaa10f7be1
 
 # if rekey_ingress is "none", nginx uses self-signed (untrusted) TLS certificate
 # if rekey_ingress is "provided", put appropriate public.crt and private.key files in roles/kaholohelm/files
@@ -20,5 +21,5 @@ kaholo_imagetag: be57d8d594d702033a8dd1d9f3c994b3d52b9680
 rekey_ingress: letsencrypt
 
 # kaholo workloads needs at least 1,5 CPU core and 4 Gi of RAM memory, the rest can be used by the agent
-# example: for VM that has 2 cores and 8 Gi of RAM memory, set below to '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"400m","memory":"3Gi"}}'
-agent_resources: '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"400m","memory":"3Gi"}}'
+# example: for VM that has 2 cores and 8 Gi of RAM memory, set below to '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
+agent_resources: '{"limits":{"cpu":"500m","memory":"4Gi"},"requests":{"cpu":"300m","memory":"1Gi"}}'
