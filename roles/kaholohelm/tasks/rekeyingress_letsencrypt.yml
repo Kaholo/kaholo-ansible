@@ -8,6 +8,10 @@
   command:
     cmd: "microk8s kubectl apply -f ~/ansible_temp/kaholo_cert.yml"
 
+- name: Wait a few seconds for apply to take effect
+  pause:
+    seconds: 10
+
 - name: Tell Ingress {{ mk8s_namespace }}.{{ domain }} to use new secret
   command:
     cmd: "microk8s kubectl -n {{ mk8s_namespace }} patch ingress {{ mk8s_namespace }}.{{ domain }} --type=json -p='[{\"op\": \"add\", \"path\": \"/spec/tls/0/secretName\", \"value\": \"{{ mk8s_namespace }}-tls\"}]'"
