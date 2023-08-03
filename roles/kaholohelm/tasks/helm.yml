@@ -60,7 +60,7 @@
 
 - name: Create dockerhub-auth Secret
   command:
-    cmd: kubectl create secret generic dockerhub-auth --from-literal=DOCKERHUB_USERNAME=matankaholo --from-literal=DOCKERHUB_PASSWORD={{ dckr_pat }}
+    cmd: microk8s kubectl create secret generic dockerhub-auth --from-literal=DOCKERHUB_USERNAME=matankaholo --from-literal=DOCKERHUB_PASSWORD={{ dckr_pat }}
     creates: ~/ansible_temp/namespace.created
 
 - name: Record success creating namespace
