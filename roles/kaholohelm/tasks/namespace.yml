@@ -1,0 +1,19 @@
+- name: Create Namespace
+  command:
+    cmd: microk8s kubectl create namespace {{ mk8s_namespace }}
+    creates: ~/ansible_temp/namespace.created
+
+- name: Create Docker Kubernetes Secret
+  command:
+    cmd: microk8s kubectl create secret docker-registry regcred --docker-server=https://index.docker.io/v1/ --docker-username=matankaholo --docker-password={{ dckr_pat }} --docker-email=poc.user@kaholo.io -n {{ mk8s_namespace }}
+    creates: ~/ansible_temp/namespace.created
+
+- name: Create dockerhub-auth Secret
+  command:
+    cmd: microk8s kubectl create secret generic dockerhub-auth --from-literal=DOCKERHUB_USERNAME=matankaholo --from-literal=DOCKERHUB_PASSWORD={{ dckr_pat }} -n {{ mk8s_namespace }}
+    creates: ~/ansible_temp/namespace.created
+
+- name: Record success creating namespace
+  file:
+    path: ~/ansible_temp/namespace.created
+    state: touch

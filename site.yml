@@ -7,3 +7,5 @@
   vars_files:
   - vars/kaholo.yml
   - vars/secrets.yml
+  # - vars/kaholo-b.yml
+  # - vars/secrets-demo.yml

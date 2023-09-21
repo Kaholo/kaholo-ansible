@@ -12,3 +12,4 @@
     - scripts/kaholo-backup.sh
     - scripts/kaholo-restore.sh
     - scripts/kletsencrypt.sh
+    - scripts/kmongo-bash.sh
