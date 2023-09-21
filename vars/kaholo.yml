@@ -13,7 +13,8 @@ time_zone: Europe/Helsinki
 
 # kaholo/5.1.1 is be57d8d594d702033a8dd1d9f3c994b3d52b9680
 # kaholo/6.1.0 is d69bc4ad3fc5153f37a4aff383987beaa10f7be1
-kaholo_imagetag: d69bc4ad3fc5153f37a4aff383987beaa10f7be1
+# kaholo/6.2.0 is cff8e94f09b377c775919d8d5c9d50b76e88d802
+kaholo_imagetag: cff8e94f09b377c775919d8d5c9d50b76e88d802
 
 # if rekey_ingress is "none", nginx uses self-signed (untrusted) TLS certificate
 # if rekey_ingress is "provided", put appropriate public.crt and private.key files in roles/kaholohelm/files
