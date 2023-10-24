@@ -13,3 +13,4 @@
     - scripts/kaholo-restore.sh
     - scripts/kletsencrypt.sh
     - scripts/kmongo-bash.sh
+    - scripts/krun-migration.sh
