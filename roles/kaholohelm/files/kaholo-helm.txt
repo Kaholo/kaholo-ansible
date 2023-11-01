@@ -1,7 +1,8 @@
-md5sum 7f91ee7ea59dd2c0ff9ff380001035f9
-commit a0ad371816350724a919c7baff2974064f18741b (HEAD -> develop, origin/develop)
-Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
-Date:   Tue Oct 24 10:59:38 2023 +0200
+d1084765d7a9ed780cf55f7578624149  kaholo-helm.zip
 
-fae8496a9153f63916d3140d6fbfec53  kaholo-helm.zip
-very next push to dev
+develop branch
+commit 71d1a18700f517ef929f8c51ccd1060d42cebd6d (HEAD -> develop, origin/develop)
+Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
+Date:   Tue Oct 31 13:40:39 2023 +0100
+
+    Add REDIS envs to websocket-service (#166)
