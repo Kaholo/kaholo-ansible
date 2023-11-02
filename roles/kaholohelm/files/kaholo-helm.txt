@@ -1,8 +1,9 @@
-d1084765d7a9ed780cf55f7578624149  kaholo-helm.zip
+89840555eef66e978fae87d5f6c834de  kaholo-helm.zip
 
 develop branch
-commit 71d1a18700f517ef929f8c51ccd1060d42cebd6d (HEAD -> develop, origin/develop)
-Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
-Date:   Tue Oct 31 13:40:39 2023 +0100
 
-    Add REDIS envs to websocket-service (#166)
+commit 083d4a6f8c0d6db838315af75eecb8a7c54b2c11 (HEAD -> develop, origin/develop)
+Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
+Date:   Thu Nov 2 12:32:34 2023 +0100
+
+    Fix microk8s deployment for gitops service support (#167)
