@@ -1,0 +1,10 @@
+---
+- name: Place GitOps Secret YAML
+  template:
+    src: ../templates/gitops_secret.yml
+    dest: ~/ansible_temp/gitops_secret.yml
+
+- name: Apply GitOps Secret YAML
+  command:
+    cmd: "microk8s kubectl apply -f ~/ansible_temp/gitops_secret.yml"
+
