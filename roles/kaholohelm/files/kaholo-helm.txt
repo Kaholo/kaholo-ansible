@@ -1,6 +1,6 @@
-89840555eef66e978fae87d5f6c834de  kaholo-helm.zip
+1216cf40d2141af2e4cabcaabadbca45  kaholo-helm.zip
 
-develop branch
+develop branch - with ken's manual fixes on TENANT_DUMP and TENANT_RESTORE
 
 commit 083d4a6f8c0d6db838315af75eecb8a7c54b2c11 (HEAD -> develop, origin/develop)
 Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
