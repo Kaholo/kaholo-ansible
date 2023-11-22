@@ -1,9 +1,5 @@
-1216cf40d2141af2e4cabcaabadbca45  kaholo-helm.zip
-
-develop branch - with ken's manual fixes on TENANT_DUMP and TENANT_RESTORE
-
-commit 083d4a6f8c0d6db838315af75eecb8a7c54b2c11 (HEAD -> develop, origin/develop)
+commit 9f9fa8823b6deec3e2c2bae21337f62f3000e85c (HEAD -> develop, origin/develop)
 Author: tomjohntaylor <46534506+tomjohntaylor@users.noreply.github.com>
-Date:   Thu Nov 2 12:32:34 2023 +0100
+Date:   Tue Nov 21 20:02:36 2023 +0100
 
-    Fix microk8s deployment for gitops service support (#167)
+f0a001cbe0f586c2edc3262d829bd83d  kaholo-helm.zip
