@@ -5,5 +5,7 @@
 - include_tasks: rekeyingress_letsencrypt.yml
   when: rekey_ingress == "letsencrypt"
 - include_tasks: scripts.yml
+- include_tasks: gitops.yml
+  when: gitops_enabled
 - include_tasks: helm.yml
 - include_tasks: results.yml

@@ -17,6 +17,13 @@
     search_string: allowPotentialCommandInjectionK8S
     line: '  allowPotentialCommandInjectionK8S: true'
 
+- name: Set callback URL to develop not production
+  lineinfile:
+    path: ~/kaholo-helm/values.yaml
+    search_string: callbackUrl
+    line: '  callbackUrl: https://devg-github-login-callback.kaholo.net'
+  when: gitops_develop_mode
+
 - name: Place public license key
   copy:
     src: ./files/kaholo-license.pub
@@ -48,7 +55,25 @@
     insertafter: '^alias kubectl'
   with_items: "{{ tenant_scripts.files }}"
 
-- name: Run TENANT_INSTALL script
+- name: Run TENANT_INSTALL script WITH GitOps
+  shell:
+    chdir: ~/kaholo-helm/scripts/tenants-management/
+    cmd: |
+      ./TENANT_INSTALL.sh \
+      -t {{ kaholo_imagetag }} \
+      -n {{ mk8s_namespace }} \
+      -d {{ domain }} \
+      -s {{ host }} \
+      -o microk8s-hostpath \
+      -x microk8s-hostpath \
+      -k {{ kaholo_server_key }} \
+      -u '{{ agent_resources }}' \
+      -h {{ mk8s_namespace }}-tls \
+      -z
+    creates: ~/kaholo-helm/values-{{ mk8s_namespace }}.yaml
+  when: gitops_enabled
+
+- name: Run TENANT_INSTALL script (no GitOps)
   shell:
     chdir: ~/kaholo-helm/scripts/tenants-management/
     cmd: |
@@ -63,3 +88,4 @@
       -u '{{ agent_resources }}' \
       -h {{ mk8s_namespace }}-tls
     creates: ~/kaholo-helm/values-{{ mk8s_namespace }}.yaml
+  when: not gitops_enabled

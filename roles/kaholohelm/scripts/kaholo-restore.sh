@@ -11,4 +11,4 @@ then
 fi
 echo "Restoring backup located in $CURRENTDIR/$1/"
 cd kaholo-helm/scripts/tenants-management
-./TENANT_RESTORE.sh $MK8S_NAMESPACE $MK8S_SOURCE_NAMESPACE $CURRENTDIR/$1/
+./TENANT_RESTORE.sh -n $MK8S_NAMESPACE -s $MK8S_SOURCE_NAMESPACE -p $CURRENTDIR/$1/
